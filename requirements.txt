@@ -1,0 +1,9 @@
+torch 
+numpy
+pandas
+openai-whisper
+torchaudio
+tqdm
+ipywidgets
+transformers[torch]
+ffmpeg
