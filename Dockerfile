@@ -118,12 +118,25 @@ RUN set -eux; \
 	pip --version
 
 
-WORKDIR /whisper
-ENV PYTHONPATH /whisper
+## Add user 
+RUN useradd -rm -d /home/whisper -s /bin/bash -g root -G sudo -u 1001 whisper
+
+USER root
+ENV PYTHONPATH /home/whisper/
 ENV LD_PRELOAD /usr/lib/aarch64-linux-gnu/libgomp.so.1
 COPY requirements.txt requirements.txt
 RUN pip install --upgrade pip
 RUN pip install -r requirements.txt
-RUN apt-get update && apt-get install -y ffmpeg
+
+RUN apt-get -y update
+RUN apt-get -y upgrade
+# RUN apt-get install -y software-properties-common
+# RUN rm -rf /var/lib/apt/lists/* 
+#RUN add-apt-repository -y ppa:jonathonf/ffmpeg-4
+#RUN apt-get install -y ffmpeg
+RUN apt-get install -y ffmpeg
+
+USER whisper
+WORKDIR /home/whisper
 
 CMD ["python3"]
