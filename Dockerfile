@@ -128,13 +128,21 @@ COPY requirements.txt requirements.txt
 RUN pip install --upgrade pip
 RUN pip install -r requirements.txt
 
-RUN apt-get -y update
-RUN apt-get -y upgrade
+
+
 # RUN apt-get install -y software-properties-common
 # RUN rm -rf /var/lib/apt/lists/* 
-#RUN add-apt-repository -y ppa:jonathonf/ffmpeg-4
-#RUN apt-get install -y ffmpeg
+# RUN apt-get install software-properties-common
+# RUN apt -y install software-properties-common dirmngr apt-transport-https lsb-release ca-certificates
+RUN apt-get update && \
+    apt-get install -y software-properties-common && \
+    rm -rf /var/lib/apt/lists/*
+
+RUN apt-get -y update
+RUN add-apt-repository -y ppa:jonathonf/ffmpeg-4
 RUN apt-get install -y ffmpeg
+#RUN apt-get install -y ffmpeg
+#RUN ldd ${python_lib}/dist-packages/torchaudio/lib/libtorchaudio_ffmpeg.so
 
 USER whisper
 WORKDIR /home/whisper
