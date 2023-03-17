@@ -5,7 +5,7 @@ openai-whisper
 tqdm
 ipywidgets
 ffmpeg
-
+torchaudio
 datasets>=2.6.1
 transformers[torch]
 librosa
